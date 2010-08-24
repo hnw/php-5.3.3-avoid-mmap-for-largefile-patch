@@ -1,0 +1,14 @@
+diff -ur php-5.3.3-orig/main/streams/streams.c php-5.3.3/main/streams/streams.c
+--- php-5.3.3-orig/main/streams/streams.c	2010-05-19 04:39:39.000000000 +0900
++++ php-5.3.3/main/streams/streams.c	2010-08-24 10:06:07.000000000 +0900
+@@ -1329,6 +1329,10 @@
+ 			*len = 0;
+ 			return SUCCESS;
+ 		}
++		if (maxlen == 0) {
++			/* only when this function was called with parameter maxlen == PHP_STREAM_COPY_ALL */
++			maxlen = ssbuf.sb.st_size;
++		}
+ 	}
+ 
+ 	if (php_stream_mmap_possible(src)) {
